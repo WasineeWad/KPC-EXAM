@@ -5,6 +5,11 @@
   padding-right: 20px
 }
 
+.error-message {
+  color: red;
+  font-size: 12px;
+}
+
 .field-label {
   color: black
 }

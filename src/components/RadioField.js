@@ -3,17 +3,27 @@ import PropTypes from 'prop-types'
 import './TextField.css'
 
 const RadioField = (props) => {
+  const {label, options, required, form, field} = props
   return (
-    <div className='input-field'>
-      <div className='field-label'>{props.label}:</div>
-      {props.required && <div className='required-star'>*</div>}
-      <div className='space' />
-      {props.options.map(optionItem => (
-        <div>
-          <input type='radio' key={optionItem} name='Gender' value={optionItem} />
-          <span style={{paddingRight: 15}}>{optionItem}</span>
-        </div>
-      ))}
+    <div>
+      <div className='input-field'>
+        <div className='field-label'>{label}:</div>
+        {required && <div className='required-star'>*</div>}
+        <div className='space' />
+        {options.map(optionItem => (
+          <div>
+            <input
+              type='radio'
+              key={optionItem}
+              name={field.name}
+              value={optionItem}
+              onChange={(event) => form.setFieldValue(field.name, event.target.value)}
+            />
+            <span style={{paddingRight: 15}}>{optionItem}</span>
+          </div>
+        ))}
+      </div>
+      {form.errors[field.name] && form.touched[field.name] ? <div>{form.errors[field.name]}</div> : null}
     </div>
   )
 }
