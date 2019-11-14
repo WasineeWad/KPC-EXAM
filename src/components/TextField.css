@@ -1,0 +1,18 @@
+.input-field {
+  display: flex;
+  flex-direction: 'row';
+  padding-left: 20px;
+  padding-right: 20px
+}
+
+.field-label {
+  color: black
+}
+
+.required-star {
+  color: red
+}
+
+.space {
+  padding: 3px
+}
