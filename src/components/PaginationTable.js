@@ -1,17 +1,32 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ReactPaginate from 'react-paginate'
+import { connect } from 'react-redux'
 import { Table } from 'react-bootstrap'
 import _ from 'lodash'
 import './Pagination.css'
 import TableRow from './TableRow'
 
-export default class PaginationTable extends Component {
+class PaginationTable extends Component {
   static propTypes = {
     allData: PropTypes.object
   }
 
+  handleDelete = (id) => {
+    const oldData = this.props.allData
+    const remainData = _.omit(oldData, id)
+    localStorage.setItem('formData', JSON.stringify(remainData))
+    this.props.deleteData(id)
+  }
+
+  handleEdit = (id) => {
+    const editData = this.props.allData[id]
+    console.log('editData', editData)
+    this.props.form.setValues(editData)
+  }
+
   render() {
+    console.log('pagination props', this.props)
     return (
       <div className='pagination-table-container'>
         <ReactPaginate
@@ -44,8 +59,8 @@ export default class PaginationTable extends Component {
               </tr>
             </thead>
             <tbody>
-              {_.map(this.props.allData, (data) => {
-                return (<TableRow data={data} handleEdit={this.handleEdit} handleDelete={this.handleDelete}/>)
+              {_.map(this.props.allData, (data, key) => {
+                return (<TableRow data={data} handleEdit={() => this.handleEdit(key)} handleDelete={() => this.handleDelete(key)}/>)
               })}  
             </tbody>
           </Table>
@@ -54,4 +69,10 @@ export default class PaginationTable extends Component {
     )
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  deleteData: id => dispatch({type: 'DELETE_DATA', id})
+})
+
+export default connect(null, mapDispatchToProps)(PaginationTable)
 

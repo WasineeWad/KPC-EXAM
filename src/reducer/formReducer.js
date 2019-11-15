@@ -1,22 +1,25 @@
+import _ from 'lodash'
+
 const initialState = {
   allData: {}
 }
 
 const formReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'CREATE_DATA':
+    case 'ADD_DATA':
       return {
-        ...state,
         allData: action.data
       }
     case 'EDIT_DATA':
       return {
         ...state
       }
-    case 'DELETE_DATA':
+    case 'DELETE_DATA': {
+      const remainData = _.omit(state.allData, action.id)
       return {
-        ...state
+        allData: remainData
       } 
+    }
     default:
       return state
   }

@@ -49,7 +49,20 @@ const FormValidateSchema = Yup.object().shape({
     .of(Yup.string().required('Please fill your mobile phone.')),
   expectSalary: Yup.string()
     .required('Please fill your expect salary.')
-});
+})
+
+const initialFormValue = {
+  titleName: 'Mr',
+  firstName: '',
+  lastName: '',
+  birthday: new Date(),
+  nationality: '',
+  citizenID: '',
+  gender: 'Male',
+  mobilePhone: ['+66', ''],
+  passportNo: '',
+  expectSalary: ''
+}
 
 export class App extends Component {
   constructor(props) {
@@ -60,42 +73,30 @@ export class App extends Component {
   }
   componentDidMount() {
     const allData = JSON.parse(localStorage.getItem('formData'))
-    // console.log(allData)
-    this.props.createData(allData)
-    // this.setState({allData})
-    // var keys = Object.keys(localStorage);
-    // console.log('keys', keys)
+    this.props.addData(allData)
   }
   render() {
     console.log('props', this.props)
     return (
       <div className='App'>
         <Formik
-          initialValues={{
-            titleName: 'Mr',
-            firstName: '',
-            lastName: '',
-            birthday: new Date(),
-            nationality: '',
-            citizenID: '',
-            gender: 'Male',
-            mobilePhone: ['+66'],
-            passportNo: '',
-            expectSalary: ''
-          }}
+          initialValues={initialFormValue}
           validationSchema={FormValidateSchema}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={(values, formikBag) => {
+            console.log('formikBag', formikBag)
+            const { setSubmitting, resetForm } = formikBag
             const dataKey = values.mobilePhone.join('')
             setTimeout(() => {
               alert(JSON.stringify(values, null, 2))
-              const oldData = JSON.parse(localStorage.getItem('formData'))
+              const oldData = this.props.allData
               const formData = {
                 ...oldData,
                 [dataKey]: values
               }
               localStorage.setItem('formData', JSON.stringify(formData))
-              // localStorage.setItem(`${dataKey}`, JSON.stringify(values))
-              setSubmitting(false);
+              this.props.addData(formData)
+              setSubmitting(false)
+              resetForm(initialFormValue)
             }, 400);
           }}
         >
@@ -138,12 +139,13 @@ export class App extends Component {
                     <button type="submit">SUBMIT</button>
                   </div>
                 </div>
+                <Field component={PaginationTable} allData={this.props.allData}/>
               </form>
             )
           }
         </Formik>
         <br />
-        <PaginationTable allData={this.state.allData}/>
+        
       </div>
     )
   }
@@ -156,7 +158,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  createData: data => dispatch({type: 'CREATE_DATA', data})
+  addData: data => dispatch({type: 'ADD_DATA', data})
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

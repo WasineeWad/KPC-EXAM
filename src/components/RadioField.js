@@ -17,6 +17,7 @@ const RadioField = (props) => {
               key={optionItem}
               name={field.name}
               value={optionItem}
+              checked={optionItem === field.value}
               onChange={(event) => form.setFieldValue(field.name, event.target.value)}
             />
             <span style={{paddingRight: 15}}>{optionItem}</span>
