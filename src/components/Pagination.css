@@ -1,0 +1,48 @@
+.pagination-contianer {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.button {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-style: solid;
+  border-width: 0.5px;
+  border-radius: 3px;
+  border-color: grey;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.page-number-section {
+  list-style-type: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.breaker-section {
+  list-style-type: none;
+  vertical-align: center;
+}
+
+.breaker-text {
+  color: grey;
+}
+
+.link {
+  color: green
+}
+
+.active-page {
+  color: red
+}
+
+.pagination-table-container {
+  display: flex;
+  flex-direction: column
+}
