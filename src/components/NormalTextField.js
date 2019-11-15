@@ -13,6 +13,7 @@ const NormalTextField = (props) => {
         <div>
           <input
             type='text'
+            className='input-box'
             name='Name'
             value={field.value}
             onChange={(event) => {

@@ -12,6 +12,7 @@ const DropdownTextFileld = (props) => {
       <div>
         <select
           name='national'
+          className='input-box'
           id='national-select'
           value={field.value}
           onChange={(event) => {

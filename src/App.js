@@ -3,6 +3,7 @@ import { Formik, Field, FieldArray } from 'formik'
 import * as Yup from 'yup'
 import { connect } from 'react-redux'
 import _ from 'lodash'
+import { Button } from 'react-bootstrap'
 import './App.css'
 import NormalTextField from './components/NormalTextField'
 import DropdownTextFileld from './components/DropdownTextFileld'
@@ -12,24 +13,28 @@ import MultipleTextField from './components/MultipleTextField'
 import PaginationTable from './components/PaginationTable'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const nationalOptionsList = ['Thai', 'American', 'Japanese']
+const nationalOptionsList = ['Spanish', 'Sri Lankan', 'Thai', 'Chinese', 'South Korean', 'Australian']
 const titleOptionsList = ['Mr', 'Mrs', 'Miss', 'Ms']
 const radioOptions = ['Male', 'Female', 'Unisex']
 const citizenIDFieldList = [
-  {type: 'normal', maxlength: 1, style: {width: 25}},
-  {type: 'normal', maxlength: 4, style: {width: 60}},
-  {type: 'normal', maxlength: 5, style: {width: 60}},
-  {type: 'normal', maxlength: 2, style: {width: 45}},
-  {type: 'normal', maxlength: 1, style: {width: 25}},
+  {type: 'normal', maxlength: 1, style: {width: 35}},
+  {type: 'normal', maxlength: 4, style: {width: 70}},
+  {type: 'normal', maxlength: 5, style: {width: 70}},
+  {type: 'normal', maxlength: 2, style: {width: 55}},
+  {type: 'normal', maxlength: 1, style: {width: 35}},
 ]
 const mobilePhoneFieldList = [
   {
     type: 'dropdown',
-    defaultValue: 'TH',
+    defaultValue: '+66',
     style: {width: 55},
     options: [
+      {value: '+34', display: '+34'},
+      {value: '+94', display: '+94'},
       {value: '+66', display: '+66'},
-      {value: '+00', display: '+00'}
+      {value: '+86', display: '+86'},
+      {value: '+82', display: '+82'},
+      {value: '+61', display: '+61'},
     ]},
   {
     type: 'normal',
@@ -108,7 +113,7 @@ export class App extends Component {
           }}
         >
           {
-            (formikProps) => (
+            (formikProps) => console.log('formik', formikProps) || (
               <form onSubmit={formikProps.handleSubmit}>
                 <div className='form-section'>
                   <div className='form-row'>
@@ -143,7 +148,7 @@ export class App extends Component {
                     <span>THB</span>
                   </div>
                   <div className='button-row'>
-                    <button type="submit">SUBMIT</button>
+                    <Button type='submit' variant="success">SUBMIT</Button>
                   </div>
                 </div>
                 <div>

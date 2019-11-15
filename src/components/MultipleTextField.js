@@ -18,6 +18,7 @@ const MultipleTextField = (props) => {
                   <div>
                     <Field
                       name={`${fieldArrayHelper.name}.${index}`}
+                      className='input-box'
                       style={input.style}
                       type='text'
                       maxlength={input.maxlength}
@@ -37,6 +38,7 @@ const MultipleTextField = (props) => {
                       () => (
                         <select
                           name={`${fieldArrayHelper.name}.${index}`}
+                          className='input-box'
                           id='national-select'
                           style={input.style}
                           onChange={(event) => {

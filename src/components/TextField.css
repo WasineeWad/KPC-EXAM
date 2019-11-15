@@ -2,16 +2,21 @@
   display: flex;
   flex-direction: 'row';
   padding-left: 20px;
-  padding-right: 20px
+  padding-right: 20px;
+  color: #424242;
+  font-family: 'Barlow Semi Condensed', sans-serif;
 }
 
 .error-message {
   color: red;
   font-size: 12px;
+  font-family: 'Barlow Semi Condensed', sans-serif;
 }
 
 .field-label {
-  color: black
+  font-family: 'Barlow Semi Condensed', sans-serif;
+  color: #424242;
+  font-size: 14px;
 }
 
 .required-star {
@@ -20,4 +25,11 @@
 
 .space5 {
   padding: 5px
+}
+
+.input-box {
+  border: 0.4px solid #1fc8db;
+  border-radius: 2px;
+  box-shadow: 1px 10px 8px -11px #bdbdbd;
+  height: 23px;
 }

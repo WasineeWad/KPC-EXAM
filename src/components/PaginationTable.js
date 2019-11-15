@@ -38,7 +38,6 @@ class PaginationTable extends Component {
   }
 
   handleSelectAllCheckbox = (value) => {
-    console.log('handleSelectAllCheckbox', value)
     this.setState({isCheckedAll: value})
   }
 
@@ -59,15 +58,15 @@ class PaginationTable extends Component {
           <div className='select-all-section'>
             <input type='checkbox' onChange={() => this.handleSelectAllCheckbox(!this.state.isCheckedAll)} checked={this.state.isCheckedAll}/>
             <div className='space5' />
-            <span>Select all</span>
+            <span className='text-black'>Select all</span>
             <div className='space5' />
-            <Button variant="outline-danger" size="sm" disabled={!this.state.isCheckedAll} onClick={this.handleDeleteAll}>Delete All</Button>
+            <Button variant="danger" size="sm" disabled={!this.state.isCheckedAll} onClick={this.handleDeleteAll}>Delete All</Button>
           </div>
           <ReactPaginate
-            previousLabel={'← PREV'}
-            nextLabel={'NEXT →'}
-            previousClassName={'button'}
-            nextClassName={'button'}
+            previousLabel={'<'}
+            nextLabel={'>'}
+            previousClassName={'prev-button'}
+            nextClassName={'next-button'}
             breakLabel={'...'}
             breakClassName={'breaker-section'}
             breakLinkClassName={'breaker-text'}
@@ -82,7 +81,7 @@ class PaginationTable extends Component {
           />
         </div>
         <div>
-          <Table striped bordered hover size="sm">
+          <Table className='table' striped bordered hover size="sm">
             <thead>
               <tr>
                 <th></th>

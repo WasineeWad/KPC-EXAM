@@ -11,9 +11,9 @@ const DateField = (props) => {
     <div className='input-field'>
       <div className='field-label'>{label}:</div>
       {required && <div className='required-star'>*</div>}
-      <div className='space' />
+      <div className='space5' />
       <div>
-        <DatePicker selected={new Date()} onChange={date => form.setFieldValue(field.name, date)} />
+        <DatePicker className='input-box' selected={field.value} onChange={date => form.setFieldValue(field.name, date)} />
         {form.errors[field.name] && form.touched[field.name] ? <div className='error-message'>{form.errors[field.name]}</div> : null}
       </div>
     </div>
