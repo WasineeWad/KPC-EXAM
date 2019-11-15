@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { Formik, Field, FieldArray } from 'formik'
 import * as Yup from 'yup'
+import { connect } from 'react-redux'
 import './App.css'
 import NormalTextField from './components/NormalTextField'
 import DropdownTextFileld from './components/DropdownTextFileld'
@@ -59,12 +60,14 @@ export class App extends Component {
   }
   componentDidMount() {
     const allData = JSON.parse(localStorage.getItem('formData'))
-    console.log(allData)
-    this.setState({allData})
+    // console.log(allData)
+    this.props.createData(allData)
+    // this.setState({allData})
     // var keys = Object.keys(localStorage);
     // console.log('keys', keys)
   }
   render() {
+    console.log('props', this.props)
     return (
       <div className='App'>
         <Formik
@@ -146,4 +149,14 @@ export class App extends Component {
   }
 }
 
-export default App
+const mapStateToProps = (state) => {
+  return {
+    allData: state.allData
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  createData: data => dispatch({type: 'CREATE_DATA', data})
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
