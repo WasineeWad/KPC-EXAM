@@ -10,10 +10,6 @@ const formReducer = (state = initialState, action) => {
       return {
         allData: action.data
       }
-    case 'EDIT_DATA':
-      return {
-        ...state
-      }
     case 'DELETE_DATA': {
       const remainData = _.omit(state.allData, action.id)
       return {

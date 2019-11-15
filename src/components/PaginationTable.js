@@ -12,6 +12,13 @@ class PaginationTable extends Component {
     allData: PropTypes.object
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      offset: 0
+    }
+  }
+
   handleDelete = (id) => {
     const oldData = this.props.allData
     const remainData = _.omit(oldData, id)
@@ -21,12 +28,20 @@ class PaginationTable extends Component {
 
   handleEdit = (id) => {
     const editData = this.props.allData[id]
-    console.log('editData', editData)
     this.props.form.setValues(editData)
   }
 
+  handlePageClick = data => {
+    let selectedPage = data.selected
+    this.setState({offset: selectedPage * 5})
+  }
+
   render() {
-    console.log('pagination props', this.props)
+    const { allData } = this.props
+    const splicedData = Object.keys(allData).slice(this.state.offset, this.state.offset + 5).reduce((result, key) => {
+      result[key] = allData[key]
+      return result
+    }, {})
     return (
       <div className='pagination-table-container'>
         <ReactPaginate
@@ -39,10 +54,10 @@ class PaginationTable extends Component {
           breakLinkClassName={'breaker-text'}
           pageClassName={'page-number-section'}
           pageLinkClassName={'link'}
-          pageCount={5}
+          pageCount={Math.ceil(Object.keys(allData).length / 5)}
           marginPagesDisplayed={2}
-          pageRangeDisplayed={2}
-          onPageChange={() => console.log('page changed')}
+          pageRangeDisplayed={5}
+          onPageChange={this.handlePageClick}
           containerClassName={'pagination-contianer'}
           activeClassName={'active-page'}
         />
@@ -59,7 +74,7 @@ class PaginationTable extends Component {
               </tr>
             </thead>
             <tbody>
-              {_.map(this.props.allData, (data, key) => {
+              {_.map(splicedData, (data, key) => {
                 return (<TableRow data={data} handleEdit={() => this.handleEdit(key)} handleDelete={() => this.handleDelete(key)}/>)
               })}  
             </tbody>

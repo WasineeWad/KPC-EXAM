@@ -71,10 +71,12 @@ export class App extends Component {
       allData: {}
     };
   }
+
   componentDidMount() {
     const allData = JSON.parse(localStorage.getItem('formData'))
     this.props.addData(allData)
   }
+  
   render() {
     console.log('props', this.props)
     return (
@@ -96,7 +98,7 @@ export class App extends Component {
               localStorage.setItem('formData', JSON.stringify(formData))
               this.props.addData(formData)
               setSubmitting(false)
-              resetForm(initialFormValue)
+              // resetForm(initialFormValue)
             }, 400);
           }}
         >
