@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { Formik, Field, FieldArray } from 'formik'
 import * as Yup from 'yup'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 import './App.css'
 import NormalTextField from './components/NormalTextField'
 import DropdownTextFileld from './components/DropdownTextFileld'
@@ -65,20 +66,12 @@ const initialFormValue = {
 }
 
 export class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      allData: {}
-    };
-  }
-
   componentDidMount() {
     const allData = JSON.parse(localStorage.getItem('formData'))
-    this.props.addData(allData)
+    allData && this.props.addData(allData)
   }
-  
+
   render() {
-    console.log('props', this.props)
     return (
       <div className='App'>
         <Formik
@@ -141,13 +134,14 @@ export class App extends Component {
                     <button type="submit">SUBMIT</button>
                   </div>
                 </div>
-                <Field component={PaginationTable} allData={this.props.allData}/>
+                <div>
+                  {!_.isEmpty(this.props.allData) && <Field component={PaginationTable} allData={this.props.allData}/>}
+                </div>
               </form>
             )
           }
         </Formik>
         <br />
-        
       </div>
     )
   }

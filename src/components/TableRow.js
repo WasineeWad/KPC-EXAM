@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, ButtonToolbar } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
 export class TableRow extends Component {
   static propTypes = {
@@ -11,19 +11,29 @@ export class TableRow extends Component {
     super(props)
     this.state = {
       checked: false
-    };
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.isCheckedAll !== this.props.isCheckedAll) {
+      this.props.isCheckedAll && this.setState({checked: true})
+    }
   }
 
   handleChangeData = () => {
-    this.setState({checked: !this.state.checked})
+    this.setState({checked: !this.state.checked}, () => {
+      if (!this.state.checked) {
+        this.props.handleSelectAllCheckbox(false)
+      }
+    })
   }
 
   render() {
-    const { data } = this.props
+    const { data, isCheckedAll } = this.props
     return (
       <tr>
         <td align='center'>
-          <input type='checkbox' onChange={this.handleChangeData} />
+          <input type='checkbox' onChange={this.handleChangeData} checked={isCheckedAll ? isCheckedAll : this.state.checked}/>
         </td>
         <td>{`${data.firstName} ${data.lastName}`}</td>
         <td>{data.gender}</td>

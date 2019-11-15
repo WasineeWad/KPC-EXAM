@@ -6,6 +6,21 @@
   align-items: center;
 }
 
+.top-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.select-all-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 20px;
+}
+
 .button {
   list-style-type: none;
   display: flex;
@@ -45,4 +60,8 @@
 .pagination-table-container {
   display: flex;
   flex-direction: column
+}
+
+.space5 {
+  padding: 5px
 }

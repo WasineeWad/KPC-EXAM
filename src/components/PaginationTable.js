@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ReactPaginate from 'react-paginate'
 import { connect } from 'react-redux'
-import { Table } from 'react-bootstrap'
+import { Table, Button } from 'react-bootstrap'
 import _ from 'lodash'
 import './Pagination.css'
 import TableRow from './TableRow'
@@ -15,7 +15,8 @@ class PaginationTable extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      offset: 0
+      offset: 0,
+      isCheckedAll: false
     }
   }
 
@@ -36,6 +37,16 @@ class PaginationTable extends Component {
     this.setState({offset: selectedPage * 5})
   }
 
+  handleSelectAllCheckbox = (value) => {
+    console.log('handleSelectAllCheckbox', value)
+    this.setState({isCheckedAll: value})
+  }
+
+  handleDeleteAll = () => {
+    localStorage.removeItem('formData')
+    this.props.deleteAllData()
+  }
+
   render() {
     const { allData } = this.props
     const splicedData = Object.keys(allData).slice(this.state.offset, this.state.offset + 5).reduce((result, key) => {
@@ -44,23 +55,32 @@ class PaginationTable extends Component {
     }, {})
     return (
       <div className='pagination-table-container'>
-        <ReactPaginate
-          previousLabel={'← PREV'}
-          nextLabel={'NEXT →'}
-          previousClassName={'button'}
-          nextClassName={'button'}
-          breakLabel={'...'}
-          breakClassName={'breaker-section'}
-          breakLinkClassName={'breaker-text'}
-          pageClassName={'page-number-section'}
-          pageLinkClassName={'link'}
-          pageCount={Math.ceil(Object.keys(allData).length / 5)}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageClick}
-          containerClassName={'pagination-contianer'}
-          activeClassName={'active-page'}
-        />
+        <div className='top-section'>
+          <div className='select-all-section'>
+            <input type='checkbox' onChange={() => this.handleSelectAllCheckbox(!this.state.isCheckedAll)} checked={this.state.isCheckedAll}/>
+            <div className='space5' />
+            <span>Select all</span>
+            <div className='space5' />
+            <Button variant="outline-danger" size="sm" disabled={!this.state.isCheckedAll} onClick={this.handleDeleteAll}>Delete All</Button>
+          </div>
+          <ReactPaginate
+            previousLabel={'← PREV'}
+            nextLabel={'NEXT →'}
+            previousClassName={'button'}
+            nextClassName={'button'}
+            breakLabel={'...'}
+            breakClassName={'breaker-section'}
+            breakLinkClassName={'breaker-text'}
+            pageClassName={'page-number-section'}
+            pageLinkClassName={'link'}
+            pageCount={Math.ceil(Object.keys(allData).length / 5)}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick}
+            containerClassName={'pagination-contianer'}
+            activeClassName={'active-page'}
+          />
+        </div>
         <div>
           <Table striped bordered hover size="sm">
             <thead>
@@ -75,7 +95,15 @@ class PaginationTable extends Component {
             </thead>
             <tbody>
               {_.map(splicedData, (data, key) => {
-                return (<TableRow data={data} handleEdit={() => this.handleEdit(key)} handleDelete={() => this.handleDelete(key)}/>)
+                return (
+                  <TableRow
+                    data={data}
+                    isCheckedAll={this.state.isCheckedAll}
+                    handleEdit={() => this.handleEdit(key)}
+                    handleDelete={() => this.handleDelete(key)}
+                    handleSelectAllCheckbox={(value) => this.handleSelectAllCheckbox(value)}
+                  />
+                )
               })}  
             </tbody>
           </Table>
@@ -86,7 +114,8 @@ class PaginationTable extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  deleteData: id => dispatch({type: 'DELETE_DATA', id})
+  deleteData: id => dispatch({type: 'DELETE_DATA', id}),
+  deleteAllData: () => dispatch({type: 'DELETE_ALL_DATA'})
 })
 
 export default connect(null, mapDispatchToProps)(PaginationTable)

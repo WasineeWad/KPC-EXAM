@@ -16,6 +16,10 @@ const formReducer = (state = initialState, action) => {
         allData: remainData
       } 
     }
+    case 'DELETE_ALL_DATA':
+      return {
+        allData: {}
+      }
     default:
       return state
   }
