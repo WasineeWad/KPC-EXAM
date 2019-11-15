@@ -37,7 +37,7 @@ const mobilePhoneFieldList = [
   }
 ]
 
-const FormValidateSchema = Yup.object().shape({
+const FormValidateSchema = (dataList) => Yup.object().shape({
   titleName: Yup.string()
     .required('Please select name title.'),
   firstName: Yup.string()
@@ -47,9 +47,21 @@ const FormValidateSchema = Yup.object().shape({
   birthday: Yup.string()
     .required('Please select your birth date.'),
   mobilePhone: Yup.array()
-    .of(Yup.string().required('Please fill your mobile phone.')),
+    .of(Yup.string().required('Please fill your mobile phone.'))
+    .test('mobilePhone', 'This phone number is taken.', (value) => {
+      const dupData = _.find(dataList, ['mobilePhone', value])
+      return !dupData
+    })
+    .test('mobilePhone', 'Should be number.', (value) => {
+      const regexPattern = /^[0-9]*$/
+      return regexPattern.test(value[1])
+    }),
   expectSalary: Yup.string()
     .required('Please fill your expect salary.')
+    .test('expectSalary', 'Should be number.', (value) => {
+      const regexPattern = /^[0-9]*$/
+      return regexPattern.test(value)
+    }),
 })
 
 const initialFormValue = {
@@ -76,7 +88,7 @@ export class App extends Component {
       <div className='App'>
         <Formik
           initialValues={initialFormValue}
-          validationSchema={FormValidateSchema}
+          validationSchema={() => FormValidateSchema(this.props.allData)}
           onSubmit={(values, formikBag) => {
             console.log('formikBag', formikBag)
             const { setSubmitting, resetForm } = formikBag
@@ -91,7 +103,7 @@ export class App extends Component {
               localStorage.setItem('formData', JSON.stringify(formData))
               this.props.addData(formData)
               setSubmitting(false)
-              // resetForm(initialFormValue)
+              resetForm(initialFormValue)
             }, 400);
           }}
         >

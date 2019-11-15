@@ -9,7 +9,7 @@ const RadioField = (props) => {
       <div className='input-field'>
         <div className='field-label'>{label}:</div>
         {required && <div className='required-star'>*</div>}
-        <div className='space' />
+        <div className='space5' />
         {options.map(optionItem => (
           <div>
             <input

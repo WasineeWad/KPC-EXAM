@@ -8,7 +8,7 @@ const DropdownTextFileld = (props) => {
     <div className='input-field'>
       <div className='field-label'>{label}:</div>
       {required && <div className='required-star'>*</div>}
-      <div className='space' />
+      <div className='space5' />
       <div>
         <select
           name='national'

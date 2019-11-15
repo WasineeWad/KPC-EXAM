@@ -4,13 +4,12 @@ import './TextField.css'
 
 const NormalTextField = (props) => {
   const {label, required, form, field} = props
-  // console.log('field name', field)
   return (
     <div>
       <div className='input-field'>
         <div className='field-label'>{label}:</div>
         {required && <div className='required-star'>*</div>}
-        <div className='space' />
+        <div className='space5' />
         <div>
           <input
             type='text'
