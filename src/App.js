@@ -70,7 +70,7 @@ const FormValidateSchema = (dataList) => Yup.object().shape({
 })
 
 const initialFormValue = {
-  titleName: 'Mr',
+  titleName: 'Mrs',
   firstName: '',
   lastName: '',
   birthday: new Date(),
@@ -95,11 +95,10 @@ export class App extends Component {
           initialValues={initialFormValue}
           validationSchema={() => FormValidateSchema(this.props.allData)}
           onSubmit={(values, formikBag) => {
-            console.log('formikBag', formikBag)
             const { setSubmitting, resetForm } = formikBag
             const dataKey = values.mobilePhone.join('')
             setTimeout(() => {
-              alert(JSON.stringify(values, null, 2))
+              alert('Data saved.')
               const oldData = this.props.allData
               const formData = {
                 ...oldData,
@@ -113,7 +112,7 @@ export class App extends Component {
           }}
         >
           {
-            (formikProps) => console.log('formik', formikProps) || (
+            (formikProps) => (
               <form onSubmit={formikProps.handleSubmit}>
                 <div className='form-section'>
                   <div className='form-row'>

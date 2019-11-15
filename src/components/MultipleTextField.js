@@ -4,6 +4,7 @@ import { Field } from 'formik'
 
 const MultipleTextField = (props) => {
   const {label, required, inputBoxs, fieldArrayHelper} = props
+  console.log('MultipleTextField', props)
   return (
     <div className='input-field'>
       <div className='field-label'>{label}:</div>
@@ -41,6 +42,7 @@ const MultipleTextField = (props) => {
                           className='input-box'
                           id='national-select'
                           style={input.style}
+                          defaultValue={input.defaultValue}
                           onChange={(event) => {
                             fieldArrayHelper.form.setFieldTouched(`${fieldArrayHelper.name}.${index}`)
                             fieldArrayHelper.form.setFieldValue(`${fieldArrayHelper.name}.${index}`, event.target.value)
