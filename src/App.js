@@ -7,6 +7,8 @@ import DropdownTextFileld from './components/DropdownTextFileld'
 import DateField from './components/DateField'
 import RadioField from './components/RadioField'
 import MultipleTextField from './components/MultipleTextField'
+import PaginationTable from './components/PaginationTable'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const nationalOptionsList = ['Thai', 'American', 'Japanese']
 const titleOptionsList = ['Mr', 'Mrs', 'Miss', 'Ms']
@@ -24,8 +26,8 @@ const mobilePhoneFieldList = [
     defaultValue: 'TH',
     style: {width: 55},
     options: [
-      {value: 'TH', display: '+66'},
-      {value: 'EN', display: '+00'}
+      {value: '+66', display: '+66'},
+      {value: '+00', display: '+00'}
     ]},
   {
     type: 'normal',
@@ -49,6 +51,19 @@ const FormValidateSchema = Yup.object().shape({
 });
 
 export class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      allData: {}
+    };
+  }
+  componentDidMount() {
+    const allData = JSON.parse(localStorage.getItem('formData'))
+    console.log(allData)
+    this.setState({allData})
+    // var keys = Object.keys(localStorage);
+    // console.log('keys', keys)
+  }
   render() {
     return (
       <div className='App'>
@@ -61,15 +76,22 @@ export class App extends Component {
             nationality: '',
             citizenID: '',
             gender: 'Male',
-            mobilePhone: ['TH'],
+            mobilePhone: ['+66'],
             passportNo: '',
             expectSalary: ''
           }}
           validationSchema={FormValidateSchema}
           onSubmit={(values, { setSubmitting }) => {
+            const dataKey = values.mobilePhone.join('')
             setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              localStorage.setItem(`${values.citizenID}`, JSON.stringify(values))
+              alert(JSON.stringify(values, null, 2))
+              const oldData = JSON.parse(localStorage.getItem('formData'))
+              const formData = {
+                ...oldData,
+                [dataKey]: values
+              }
+              localStorage.setItem('formData', JSON.stringify(formData))
+              // localStorage.setItem(`${dataKey}`, JSON.stringify(values))
               setSubmitting(false);
             }, 400);
           }}
@@ -117,6 +139,8 @@ export class App extends Component {
             )
           }
         </Formik>
+        <br />
+        <PaginationTable allData={this.state.allData}/>
       </div>
     )
   }

@@ -4,7 +4,6 @@ import { Field } from 'formik'
 
 const MultipleTextField = (props) => {
   const {label, required, inputBoxs, fieldArrayHelper} = props
-  console.log('fieldArrayHelper', fieldArrayHelper)
   return (
     <div className='input-field'>
       <div className='field-label'>{label}:</div>
