@@ -100,6 +100,7 @@ class PaginationTable extends Component {
               {_.map(splicedData, (data, key) => {
                 return (
                   <TableRow
+                    key={key}
                     data={data}
                     isCheckedAll={this.state.isCheckedAll}
                     handleEdit={() => this.handleEdit(key)}

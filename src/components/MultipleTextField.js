@@ -15,13 +15,13 @@ const MultipleTextField = (props) => {
             switch (input.type) {
               case 'normal':
                 return (
-                  <div>
+                  <div key={index}>
                     <Field
                       name={`${fieldArrayHelper.name}.${index}`}
                       className='input-box'
                       style={input.style}
                       type='text'
-                      maxlength={input.maxlength}
+                      maxLength={input.maxlength}
                       onChange={(event) => {
                         fieldArrayHelper.form.setFieldTouched(`${fieldArrayHelper.name}.${index}`)
                         fieldArrayHelper.form.setFieldValue(`${fieldArrayHelper.name}.${index}`, event.target.value)
@@ -32,7 +32,7 @@ const MultipleTextField = (props) => {
                 )
               case 'dropdown':
                 return (
-                  <div>
+                  <div key={index}>
                     <Field name={`${fieldArrayHelper.name}.${index}`}>
                     {
                       (formikProps) => (

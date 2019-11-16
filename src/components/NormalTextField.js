@@ -29,8 +29,13 @@ const NormalTextField = (props) => {
 }
 
 NormalTextField.propTypes = {
-  label: PropTypes.string.isRequired,
-  required: PropTypes.bool.isRequired
+  label: PropTypes.string,
+  required: PropTypes.bool
+}
+
+NormalTextField.defaultProps  = {
+  label: '',
+  required: false
 }
 
 export default NormalTextField
