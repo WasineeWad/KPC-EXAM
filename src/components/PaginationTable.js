@@ -28,7 +28,11 @@ class PaginationTable extends Component {
   }
 
   handleEdit = (id) => {
-    const editData = this.props.allData[id]
+    const editData = {
+      ...this.props.allData[id],
+      birthday: new Date(this.props.allData[id].birthday),
+      id
+    }
     this.props.form.setValues(editData)
   }
 

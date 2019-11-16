@@ -26,7 +26,6 @@ const citizenIDFieldList = [
 const mobilePhoneFieldList = [
   {
     type: 'dropdown',
-    defaultValue: '+66',
     style: {width: 55},
     options: [
       {value: '+34', display: '+34'},
@@ -53,10 +52,10 @@ const FormValidateSchema = (dataList) => Yup.object().shape({
     .required('Please select your birth date.'),
   mobilePhone: Yup.array()
     .of(Yup.string().required('Please fill your mobile phone.'))
-    .test('mobilePhone', 'This phone number is taken.', (value) => {
-      const dupData = _.find(dataList, ['mobilePhone', value])
-      return !dupData
-    })
+    // .test('mobilePhone', 'This phone number is taken.', (value) => {
+    //   const dupData = _.find(dataList, ['mobilePhone', value])
+    //   return !dupData
+    // })
     .test('mobilePhone', 'Should be number.', (value) => {
       const regexPattern = /^[0-9]*$/
       return regexPattern.test(value[1])
@@ -79,7 +78,8 @@ const initialFormValue = {
   gender: 'Male',
   mobilePhone: ['+66', ''],
   passportNo: '',
-  expectSalary: ''
+  expectSalary: '',
+  id: null
 }
 
 export class App extends Component {
@@ -96,7 +96,7 @@ export class App extends Component {
           validationSchema={() => FormValidateSchema(this.props.allData)}
           onSubmit={(values, formikBag) => {
             const { setSubmitting, resetForm } = formikBag
-            const dataKey = values.mobilePhone.join('')
+            const dataKey = values.id ? values.id : new Date().getTime()
             setTimeout(() => {
               alert('Data saved.')
               const oldData = this.props.allData

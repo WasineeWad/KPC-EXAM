@@ -35,13 +35,13 @@ const MultipleTextField = (props) => {
                   <div>
                     <Field name={`${fieldArrayHelper.name}.${index}`}>
                     {
-                      () => (
+                      (formikProps) => (
                         <select
                           name={`${fieldArrayHelper.name}.${index}`}
-                          className='input-box'
+                          className='dropdown-box'
                           id='national-select'
                           style={input.style}
-                          defaultValue={input.defaultValue}
+                          value={formikProps.field.value}
                           onChange={(event) => {
                             fieldArrayHelper.form.setFieldTouched(`${fieldArrayHelper.name}.${index}`)
                             fieldArrayHelper.form.setFieldValue(`${fieldArrayHelper.name}.${index}`, event.target.value)

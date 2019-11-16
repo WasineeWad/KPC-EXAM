@@ -32,4 +32,12 @@
   border-radius: 2px;
   box-shadow: 1px 10px 8px -11px #bdbdbd;
   height: 23px;
+  padding: 5px;
+}
+
+.dropdown-box {
+  border: 0.4px solid #1fc8db;
+  border-radius: 2px;
+  box-shadow: 1px 10px 8px -11px #bdbdbd;
+  height: 23px;
 }
